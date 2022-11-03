@@ -1,4 +1,4 @@
 export enum Paths {
   HOME = "/",
-  OTHER = "/Other",
+  ADMIN = "admin",
 }
