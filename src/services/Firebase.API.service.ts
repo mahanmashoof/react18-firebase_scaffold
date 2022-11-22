@@ -3,15 +3,39 @@ import {
   collection,
   orderBy,
   query,
-  where,
   onSnapshot,
   FirestoreError,
 } from "firebase/firestore";
-import { Demo } from "../models/api/FirebaseAPI";
+import { TodoAPI } from "../models/api/FirebaseAPI";
 
-const demoDb = query(
-  collection(firebase, "demoCollection"),
-  orderBy("demoTimestamp")
-);
+const todoDb = query(collection(firebase, "todos"), orderBy("created"));
 
-export {};
+export class TodoDataService {
+  initTodoFetch = (
+    callBack: (todos: TodoAPI[]) => void,
+    callBackError: (error: FirestoreError) => void
+  ): void => {
+    onSnapshot(
+      todoDb,
+      (querySnapshot) => {
+        const todos: TodoAPI[] = [];
+        querySnapshot.forEach((doc) => {
+          const rawData = doc.data();
+
+          const todo: TodoAPI = {
+            docId: doc.id,
+            created: rawData.created ?? new Date(0),
+            status: rawData.status ?? 0,
+            todo: rawData.todo ?? "-",
+          };
+
+          todos.push(todo);
+        });
+        callBack(todos);
+      },
+      (error) => {
+        callBackError(error);
+      }
+    );
+  };
+}
