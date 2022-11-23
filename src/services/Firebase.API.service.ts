@@ -24,8 +24,7 @@ export class TodoDataService {
 
           const todo: TodoAPI = {
             docId: doc.id,
-            created: rawData.created ?? new Date(0),
-            status: rawData.status ?? 0,
+            status: rawData.status ?? 3,
             todo: rawData.todo ?? "-",
           };
 
