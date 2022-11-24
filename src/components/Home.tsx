@@ -5,20 +5,15 @@ import { TodoDataService } from "../services/Firebase.API.service";
 const todoDataService: TodoDataService = new TodoDataService();
 
 const Home = () => {
-  const [data, setData] = useState<TodoAPI[]>([]);
-  const [isError, setIsError] = useState(false);
+  const [data, setData] = useState<TodoAPI[]>();
 
   useEffect(() => {
-    todoDataService.initTodoFetch(
-      (data) => {
-        setData(data);
-      },
-      () => setIsError(true)
-    );
+    todoDataService.initTodoFetch((data) => {
+      setData(data);
+    });
   }, []);
 
   console.log(data);
-  console.log(isError);
 
   return <div>This is Home</div>;
 };
