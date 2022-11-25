@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import { useFetchTodos } from "../hooks/api/useAPI";
 import { TodoAPI } from "../models/api/FirebaseAPI";
-import { TodoDataService } from "../services/Firebase.API.service";
-
-const todoDataService: TodoDataService = new TodoDataService();
 
 const Home = () => {
-  const [data, setData] = useState<TodoAPI[]>();
-
-  useEffect(() => {
-    todoDataService.initTodoFetch((data) => {
-      setData(data);
-    });
-  }, []);
-
-  console.log(data);
-
-  return <div>This is Home</div>;
+  const { data: todos } = useFetchTodos();
+  return (
+    <div>
+      {todos?.map((todo: TodoAPI, i) => (
+        <div key={i}>
+          <p>{todo.todo}</p>
+          <p>{todo.status}</p>
+          <p>{todo.docId}</p>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default Home;
