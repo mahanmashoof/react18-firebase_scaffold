@@ -1,0 +1,7 @@
+.todoDescRow {
+    display: flex;
+}
+
+.todoDescRow p {
+    margin-left: 1rem;
+}
