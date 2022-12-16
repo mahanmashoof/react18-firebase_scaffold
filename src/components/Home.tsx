@@ -14,18 +14,21 @@ const Home = () => {
       created: new Date(),
       status: 0,
     });
+    if (task.current?.value != null) {
+      task.current.value = "";
+    }
   };
 
   return (
     <div>
+      <input ref={task} type="text" placeholder="enter task" />
+      <button onClick={addNewDoc}>create</button>
       {todos?.map((todo: TodoAPI, i) => (
         <div className="todoDescRow" key={i}>
           <p>{i + 1}</p>
           <p>{todo.todo}</p>
         </div>
       ))}
-      <input ref={task} type="text" placeholder="enter task" />
-      <button onClick={addNewDoc}>create</button>
     </div>
   );
 };
