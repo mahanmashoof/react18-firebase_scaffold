@@ -32,9 +32,18 @@ const Home = () => {
       {todos?.map((todo: TodoAPI, i) => (
         <div className="todoDescRow" key={i}>
           <p>{i + 1}</p>
-          <p id="taskDesc">{todo.todo}</p>
-          {selectedId === todo.docId && <input id="taskEdit" />}
-          <button onClick={() => handleEdit(todo.docId)}>edit</button>
+          {selectedId !== todo.docId && (
+            <>
+              <p id="taskDesc">{todo.todo}</p>
+              <button onClick={() => handleEdit(todo.docId)}>edit</button>
+            </>
+          )}
+          {selectedId === todo.docId && (
+            <>
+              <input id="taskEdit" />
+              <button onClick={() => handleEdit("")}>cancel</button>
+            </>
+          )}
         </div>
       ))}
     </div>
