@@ -1,7 +1,7 @@
 import { useFetchTodos } from "../hooks/api/useAPI";
 import { TodoAPI } from "../models/api/FirebaseAPI";
 import "./Home.css";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import firebase from "../firebase";
 import { useRef, useState } from "react";
 import { COLLECTION_NAME } from "../types/enums";
@@ -32,8 +32,12 @@ const Home = () => {
     handleEdit("");
   };
 
-  const handleEdit = (x: string) => {
-    setSelectedId(x);
+  const deleteTodo = async (id: string) => {
+    await deleteDoc(doc(firebase, COLLECTION_NAME, id));
+  };
+
+  const handleEdit = (id: string) => {
+    setSelectedId(id);
   };
 
   return (
@@ -47,6 +51,7 @@ const Home = () => {
             <>
               <p>{todo.todo}</p>
               <button onClick={() => handleEdit(todo.docId)}>edit</button>
+              <button onClick={() => deleteTodo(todo.docId)}>delete</button>
             </>
           )}
           {selectedId === todo.docId && (
