@@ -15,6 +15,7 @@ export class TodoDataService {
           docId: doc.id,
           status: rawData.status ?? 3,
           todo: rawData.todo ?? "---Wasn't fetched from db---",
+          created: rawData.created,
         };
 
         todos.push(todo);
