@@ -3,11 +3,13 @@ import { TodoAPI } from "../models/api/FirebaseAPI";
 import "./Home.css";
 import { collection, addDoc } from "firebase/firestore";
 import firebase from "../firebase";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Home = () => {
-  const { data: todos } = useFetchTodos();
   let task = useRef<HTMLInputElement>(null);
+  const [selectedId, setSelectedId] = useState("");
+
+  const { data: todos } = useFetchTodos();
   const addNewDoc = async () => {
     await addDoc(collection(firebase, "todos"), {
       todo: task.current?.value,
@@ -19,6 +21,10 @@ const Home = () => {
     }
   };
 
+  const handleEdit = (x: string) => {
+    setSelectedId(x);
+  };
+
   return (
     <div>
       <input ref={task} type="text" placeholder="enter task" />
@@ -26,7 +32,9 @@ const Home = () => {
       {todos?.map((todo: TodoAPI, i) => (
         <div className="todoDescRow" key={i}>
           <p>{i + 1}</p>
-          <p>{todo.todo}</p>
+          <p id="taskDesc">{todo.todo}</p>
+          {selectedId === todo.docId && <input id="taskEdit" />}
+          <button onClick={() => handleEdit(todo.docId)}>edit</button>
         </div>
       ))}
     </div>

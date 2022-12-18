@@ -1,7 +1,13 @@
 .todoDescRow {
     display: flex;
+    align-items: center;
 }
 
 .todoDescRow p {
     margin-left: 1rem;
+}
+
+.todoDescRow button {
+    margin-left: 1rem;
+    height: 20px
 }
