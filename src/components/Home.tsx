@@ -8,11 +8,13 @@ import { COLLECTION_NAME } from "../types/enums";
 
 const Home = () => {
   let task = useRef<HTMLInputElement>(null);
+  let editedTask = useRef<HTMLInputElement>(null);
   const [selectedId, setSelectedId] = useState("");
 
   const { data: todos } = useFetchTodos();
 
   const addNewDoc = async () => {
+    setSelectedId("");
     await addDoc(collection(firebase, COLLECTION_NAME), {
       todo: task.current?.value,
       created: new Date(),
@@ -23,21 +25,21 @@ const Home = () => {
     }
   };
 
+  const handleEdit = (id: string) => {
+    setSelectedId(id);
+  };
+
   const editDoc = async (id: string, created: Date) => {
+    handleEdit("");
     await setDoc(doc(firebase, COLLECTION_NAME, id), {
-      todo: task.current?.value,
+      todo: editedTask.current?.value,
       created: created,
       status: 0,
     });
-    handleEdit("");
   };
 
   const deleteTodo = async (id: string) => {
     await deleteDoc(doc(firebase, COLLECTION_NAME, id));
-  };
-
-  const handleEdit = (id: string) => {
-    setSelectedId(id);
   };
 
   return (
@@ -56,7 +58,7 @@ const Home = () => {
           )}
           {selectedId === todo.docId && (
             <>
-              <input id="taskEdit" ref={task} type="text" />
+              <input id="taskEdit" ref={editedTask} type="text" />
               <button onClick={() => editDoc(todo.docId, todo.created)}>
                 OK
               </button>
