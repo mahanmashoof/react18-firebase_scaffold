@@ -58,7 +58,12 @@ const Home = () => {
           )}
           {selectedId === todo.docId && (
             <>
-              <input id="taskEdit" ref={editedTask} type="text" />
+              <input
+                id="taskEdit"
+                ref={editedTask}
+                type="text"
+                defaultValue={todo.todo}
+              />
               <button onClick={() => editDoc(todo.docId, todo.created)}>
                 OK
               </button>
