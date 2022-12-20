@@ -15,3 +15,8 @@
 #taskEdit {
     margin-left: 1rem;
 }
+
+#taskDone {
+    color: gray;
+    text-decoration:line-through
+}

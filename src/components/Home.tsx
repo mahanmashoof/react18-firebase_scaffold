@@ -42,6 +42,10 @@ const Home = () => {
     await deleteDoc(doc(firebase, COLLECTION_NAME, id));
   };
 
+  const todoStatus = (status: number) => {
+    return status === 1 ? "taskDone" : "taskDescr";
+  };
+
   return (
     <div>
       <input ref={task} type="text" placeholder="enter task" />
@@ -51,7 +55,7 @@ const Home = () => {
           <p>{i + 1}</p>
           {selectedId !== todo.docId && (
             <>
-              <p>{todo.todo}</p>
+              <p id={todoStatus(todo.status)}>{todo.todo}</p>
               <button onClick={() => handleEdit(todo.docId)}>edit</button>
               <button onClick={() => deleteTodo(todo.docId)}>delete</button>
             </>
