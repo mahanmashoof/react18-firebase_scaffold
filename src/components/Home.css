@@ -18,5 +18,10 @@
 
 #taskDone {
     color: gray;
-    text-decoration:line-through
+    text-decoration:line-through;
+    cursor:pointer;
+}
+
+#taskDescr {
+    cursor:pointer;
 }

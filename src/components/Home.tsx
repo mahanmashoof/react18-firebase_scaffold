@@ -42,8 +42,21 @@ const Home = () => {
     await deleteDoc(doc(firebase, COLLECTION_NAME, id));
   };
 
-  const todoStatus = (status: number) => {
-    return status === 1 ? "taskDone" : "taskDescr";
+  const todoStatus = (status: boolean) => {
+    return status === true ? "taskDone" : "taskDescr";
+  };
+
+  const handleChecked = async (
+    id: string,
+    todo: string,
+    created: Date,
+    status: boolean
+  ) => {
+    await setDoc(doc(firebase, COLLECTION_NAME, id), {
+      todo: todo,
+      created: created,
+      status: !status,
+    });
   };
 
   return (
@@ -55,7 +68,19 @@ const Home = () => {
           <p>{i + 1}</p>
           {selectedId !== todo.docId && (
             <>
-              <p id={todoStatus(todo.status)}>{todo.todo}</p>
+              <p
+                id={todoStatus(todo.status)}
+                onClick={() =>
+                  handleChecked(
+                    todo.docId,
+                    todo.todo,
+                    todo.created,
+                    todo.status
+                  )
+                }
+              >
+                {todo.todo}
+              </p>
               <button onClick={() => handleEdit(todo.docId)}>edit</button>
               <button onClick={() => deleteTodo(todo.docId)}>delete</button>
             </>

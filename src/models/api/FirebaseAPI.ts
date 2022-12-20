@@ -1,6 +1,6 @@
 export interface TodoAPI {
   todo: string;
-  status: number;
+  status: boolean;
   docId: string;
   created: Date;
 }

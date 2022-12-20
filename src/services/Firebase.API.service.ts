@@ -13,7 +13,7 @@ export class TodoDataService {
 
         const todo: TodoAPI = {
           docId: doc.id,
-          status: rawData.status ?? 3,
+          status: rawData.status ?? false,
           todo: rawData.todo ?? "---Wasn't fetched from db---",
           created: rawData.created,
         };
