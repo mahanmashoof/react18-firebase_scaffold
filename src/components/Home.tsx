@@ -9,7 +9,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import firebase from "../firebase";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { COLLECTION_NAME } from "../types/enums";
 
 const Home = () => {
@@ -24,7 +24,7 @@ const Home = () => {
     await addDoc(collection(firebase, COLLECTION_NAME), {
       todo: task.current?.value,
       created: new Date(),
-      status: 0,
+      status: false,
     });
     if (task.current?.value != null) {
       task.current.value = "";
@@ -58,13 +58,15 @@ const Home = () => {
     });
   };
 
+  const unhandledTasks = todos?.filter((todo) => todo.status === false);
+
   return (
     <div>
       <input ref={task} type="text" placeholder="enter task" />
       <button onClick={addNewDoc}>create</button>
+      <p>{unhandledTasks?.length} tasks pending</p>
       {todos?.map((todo: TodoAPI, i) => (
         <div className="todoDescRow" key={i}>
-          <p>{i + 1}</p>
           {selectedId !== todo.docId && (
             <>
               <p
