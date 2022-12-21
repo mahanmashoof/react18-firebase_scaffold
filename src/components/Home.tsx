@@ -1,7 +1,13 @@
 import { useFetchTodos } from "../hooks/api/useAPI";
 import { TodoAPI } from "../models/api/FirebaseAPI";
 import "./Home.css";
-import { collection, addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import firebase from "../firebase";
 import { useRef, useState } from "react";
 import { COLLECTION_NAME } from "../types/enums";
@@ -29,12 +35,11 @@ const Home = () => {
     setSelectedId(id);
   };
 
-  const editDoc = async (id: string, created: Date) => {
+  const editDoc = async (id: string) => {
     handleEdit("");
-    await setDoc(doc(firebase, COLLECTION_NAME, id), {
+    const ref = doc(firebase, COLLECTION_NAME, id);
+    await updateDoc(ref, {
       todo: editedTask.current?.value,
-      created: created,
-      status: 0,
     });
   };
 
@@ -46,15 +51,9 @@ const Home = () => {
     return status === true ? "taskDone" : "taskDescr";
   };
 
-  const handleChecked = async (
-    id: string,
-    todo: string,
-    created: Date,
-    status: boolean
-  ) => {
-    await setDoc(doc(firebase, COLLECTION_NAME, id), {
-      todo: todo,
-      created: created,
+  const handleChecked = async (id: string, status: boolean) => {
+    const ref = doc(firebase, COLLECTION_NAME, id);
+    await updateDoc(ref, {
       status: !status,
     });
   };
@@ -70,14 +69,7 @@ const Home = () => {
             <>
               <p
                 id={todoStatus(todo.status)}
-                onClick={() =>
-                  handleChecked(
-                    todo.docId,
-                    todo.todo,
-                    todo.created,
-                    todo.status
-                  )
-                }
+                onClick={() => handleChecked(todo.docId, todo.status)}
               >
                 {todo.todo}
               </p>
@@ -93,9 +85,7 @@ const Home = () => {
                 type="text"
                 defaultValue={todo.todo}
               />
-              <button onClick={() => editDoc(todo.docId, todo.created)}>
-                OK
-              </button>
+              <button onClick={() => editDoc(todo.docId)}>OK</button>
               <button onClick={() => handleEdit("")}>cancel</button>
             </>
           )}
