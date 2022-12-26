@@ -67,7 +67,7 @@ const Home = () => {
       <p>{unhandledTasks?.length} tasks pending</p>
       {todos?.map((todo: TodoAPI, i) => (
         <div className="todoDescRow" key={i}>
-          {selectedId !== todo.docId && (
+          {selectedId !== todo.docId ? (
             <>
               <p
                 id={todoStatus(todo.status)}
@@ -78,8 +78,7 @@ const Home = () => {
               <button onClick={() => handleEdit(todo.docId)}>edit</button>
               <button onClick={() => deleteTodo(todo.docId)}>delete</button>
             </>
-          )}
-          {selectedId === todo.docId && (
+          ) : (
             <>
               <input
                 id="taskEdit"
