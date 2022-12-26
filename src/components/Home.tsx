@@ -9,8 +9,9 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import firebase from "../firebase";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { COLLECTION_NAME } from "../types/enums";
+import CommonButton from "./CommonButton";
 
 const Home = () => {
   let task = useRef<HTMLInputElement>(null);
@@ -75,8 +76,16 @@ const Home = () => {
               >
                 {todo.todo}
               </p>
-              <button onClick={() => handleEdit(todo.docId)}>edit</button>
-              <button onClick={() => deleteTodo(todo.docId)}>delete</button>
+              <CommonButton
+                handleStuff={() => handleEdit(todo.docId)}
+                name={"Edit"}
+                color={"orange"}
+              />
+              <CommonButton
+                handleStuff={() => deleteTodo(todo.docId)}
+                name={"Delete"}
+                color={"red"}
+              />
             </>
           ) : (
             <>
@@ -86,8 +95,16 @@ const Home = () => {
                 type="text"
                 defaultValue={todo.todo}
               />
-              <button onClick={() => editDoc(todo.docId)}>OK</button>
-              <button onClick={() => handleEdit("")}>cancel</button>
+              <CommonButton
+                handleStuff={() => editDoc(todo.docId)}
+                name={"OK"}
+                color={"green"}
+              />
+              <CommonButton
+                handleStuff={() => handleEdit("")}
+                name={"Cancel"}
+                color={"blue"}
+              />
             </>
           )}
         </div>
