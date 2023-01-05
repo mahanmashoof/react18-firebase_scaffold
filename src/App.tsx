@@ -1,8 +1,8 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Paths } from "./types/enums";
-const Home = lazy(() => import("./components/Home"));
-const Admin = lazy(() => import("./components/Admin"));
+const Home = lazy(() => import("./components/Home/Home"));
+const Admin = lazy(() => import("./components/Admin/Admin"));
 
 function App() {
   return (

@@ -1,5 +1,5 @@
-import { useFetchTodos } from "../hooks/api/useAPI";
-import { TodoAPI } from "../models/api/FirebaseAPI";
+import { useFetchTodos } from "../../hooks/api/useAPI";
+import { TodoAPI } from "../../models/api/FirebaseAPI";
 import "./Home.css";
 import {
   collection,
@@ -8,10 +8,10 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import firebase from "../firebase";
+import firebase from "../../firebase";
 import { useRef, useState } from "react";
-import { COLLECTION_NAME } from "../types/enums";
-import CommonButton from "./CommonButton";
+import { COLLECTION_NAME } from "../../types/enums";
+import CommonButton from "../CommonButton/CommonButton";
 
 const Home = () => {
   let task = useRef<HTMLInputElement>(null);
@@ -109,6 +109,7 @@ const Home = () => {
           )}
         </div>
       ))}
+      <p>env = {process.env.NODE_ENV}</p>
     </div>
   );
 };
