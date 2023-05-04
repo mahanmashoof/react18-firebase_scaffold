@@ -109,7 +109,7 @@ const Home = () => {
           )}
         </div>
       ))}
-      <p>env = {process.env.NODE_ENV}</p>
+      <p>env = {import.meta.env.DEV ? "dev" : "prod"}</p>
     </div>
   );
 };
